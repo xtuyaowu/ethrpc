@@ -499,3 +499,22 @@ func (rpc *EthRPC) Eth1() *big.Int {
 func Eth1() *big.Int {
 	return big.NewInt(1000000000000000000)
 }
+
+
+func (rpc *EthRPC) PersonalNewAccount(password string) (string, error) {
+	var address string
+	err := rpc.call("personal_newAccount", &address, password)
+	return address, err
+}
+
+func (rpc *EthRPC) PersonalUnlockAccount(address, password string, duration int) (bool, error) {
+	var result bool
+	err := rpc.call("personal_unlockAccount", &result, address, password, duration)
+	return result, err
+}
+
+func (rpc *EthRPC) PersonalListAccounts() ([]string, error) {
+	accounts := []string{}
+	err := rpc.call("personal_listAccounts", &accounts)
+	return accounts, err
+}
